@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox-ms
+  labels:
+    app: busybox-ms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: busybox-ms
+  template:
+    metadata:
+      labels:
+        app: busybox-ms
+    spec:
+      containers:
+      - name: busybox-ms
+        #image: 10.129.178.173:5011/busybox:1.31.1
+        image: busybox
+        args: [/bin/sh, -c, 'tail -f /dev/null']
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        #volumeMounts:
+        #  - name: tmp-reader
+        #    mountPath: /opt/integracao/dip/nfs/BankFileMgmtCEF
+      #imagePullSecrets:
+      #- name: acr-dauto-poc-creds
+      #volumes:
+      #- name: tmp-reader
+      #  csi:
+      #    driver: file.csi.azure.com
+      #    volumeAttributes:
+      #      secretName: stdauto-secret  # required
+      #      shareName: fileshare-dauto-dev  # required
+      #      mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30"  # optional
+      #volumes:
+      #- name: tmp-reader
+      #  persistentVolumeClaim:
+      #    claimName: fs-sa-dauto-poc
