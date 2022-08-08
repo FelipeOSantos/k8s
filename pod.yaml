@@ -21,6 +21,12 @@ spec:
         requests:
           cpu: 100m
           memory: 256Mi
+      env:
+      - name: MONGODB_URI
+        valueFrom:
+          secretKeyRef:
+            name: secret-usecase-dip
+            key: MONGODB_URI
   volumes:
     - name: secrets-store01-inline
       csi:
